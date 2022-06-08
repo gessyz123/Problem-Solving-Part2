@@ -1,0 +1,74 @@
+using System;
+using System.Collections.Generic;
+
+namespace QueueBy2Stacks
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Queue q = new Queue();
+            q.Enqueue(1);
+            q.Enqueue(2);
+            q.Enqueue(3);
+            q.Enqueue(4);
+
+            Console.WriteLine(q.Dequeue());
+            Console.WriteLine(q.Peek());
+            Console.WriteLine(q.Dequeue());
+            Console.WriteLine(q.Peek());
+        }
+
+        public class Queue
+        {
+            Stack<int> S1 = new Stack<int>();
+            Stack<int> S2 = new Stack<int>();
+
+
+            public void Enqueue(int item)
+
+            {
+                S1.Push(item);
+
+            }
+
+            public int Dequeue()
+            {
+
+                if (S1.Count == 0 && S2.Count==0)
+                    throw new InvalidOperationException("No data is here !");
+                else
+                {
+                    if (S2.Count == 0)
+                    {
+                        while (S1.Count > 0)
+                        {
+                            S2.Push(S1.Pop());
+                        }
+                    }
+                    return S2.Pop();
+                }
+            }
+
+            public bool IsEmpty()
+            {
+                if (S1.Count == 0 && S2.Count == 0)
+                    return true;
+                else
+                    return false;
+
+            }
+
+            public int Peek()
+            {
+                if (S2.Count == 0)
+                    throw new InvalidOperationException("Invalid Operation");
+                else
+                {
+                    return S2.Peek();
+                }
+            }
+
+        }
+    }
+}
